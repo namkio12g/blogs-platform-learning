@@ -1,0 +1,17 @@
+.left-container {
+    .document-list {
+        .item {
+            margin-bottom: 10px;
+            width: fit-content;
+            padding: 2px 15px;
+            transition: all 200ms ease;
+            border-radius: 20px;
+
+            cursor: pointer;
+            &:hover {
+                background-color: rgb(83, 133, 9);
+                color: white;
+            }
+        }
+    }
+}
