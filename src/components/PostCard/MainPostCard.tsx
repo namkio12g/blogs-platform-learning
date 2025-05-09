@@ -8,34 +8,37 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { PostData } from "@/types/commonTypes";
 
-// interface TaskButtonProps {
-//     type: "delete-btn" | "done-btn" | "undone-btn";
-//     label: string;
-//     onClick: () => void;
-// }
+interface Props {
+    url: string;
+    data: PostData;
+}
 
-const MainPostCard: React.FC = () => {
+const MainPostCard: React.FC<Props> = ({ url, data }) => {
     return (
         <Card
-            className="main-post-card flex flex-row
+            className="main-post-card flex  sm:flex-row-reverse xs:flex-col
              p-8 hover:shadow-md hover:shadow-theme-text-secondary rounded-sm border-[1px] border-theme-border
             bg-theme-primary gap-1 
-             h-[370px]"
+             md:h-[370px] xs:h-auto"
         >
-            <div className="main-post-card-left flex flex-col justify-between w-1/2 pr-3 ">
+            <div className="main-post-card-right sm:w-1/2 xs:w-full place-items-center ">
+                <img src={url} alt="" />
+            </div>
+            <div className="main-post-card-left flex flex-col justify-between sm:w-1/2 xs:w-full pr-3 ">
                 <div>
                     <CardHeader className="p-0 cursor-pointer">
-                        <CardTitle className="text-theme-text-primary font-playfair text-3xl font-semibold pt-2 leading-tight">
-                            Micro-Interactions: Small Details, Big Impact in UX
+                        <CardTitle className="text-theme-text-primary font-playfair md:text-3xl sm:text-xl xs:text-2xl   font-semibold pt-2 leading-tight">
+                            {data.title}
                         </CardTitle>
-                        <CardDescription className="text-theme-text-secondary text-lg font-mono">
-                            22/04/2025
+                        <CardDescription className="text-theme-text-secondary md:text-lg  sm:text-md  xs:text-lg font-mono">
+                            {new Date(data.date).toLocaleDateString("en-GB")}
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="p-0 cursor-pointer">
-                        <p className="leading-tight text-theme-text-primary text-xl line-clamp-5">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                        <p className="leading-tight text-theme-text-primary md:text-xl sm:text-lg  xs:text-xl md:line-clamp-5 sm:line-clamp-3 xs:line-clamp-5">
+                            {data.content}.
                         </p>
                     </CardContent>
                 </div>
@@ -48,8 +51,8 @@ const MainPostCard: React.FC = () => {
                                     CN
                                 </AvatarFallback>
                             </Avatar>
-                            <p className="author-name text-theme-text-secondary font-roboto text-md">
-                                Jame Mcligni
+                            <p className="author-name text-theme-text-secondary font-roboto md:text-md sm:text-sm xs:text-md">
+                                {data.author}
                             </p>
                         </div>
                         <button
@@ -60,12 +63,6 @@ const MainPostCard: React.FC = () => {
                         </button>
                     </div>
                 </CardFooter>
-            </div>
-            <div className="main-post-card-right w-1/2 place-items-center ">
-                <img
-                    src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg"
-                    alt=""
-                />
             </div>
         </Card>
     );
