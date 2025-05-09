@@ -6,16 +6,16 @@ interface ModalProps {
     children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const BaseModal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
         <div
-            className="modal-overlay absolute w-full h-full bg-black/50 top-0 left-0 place-content-center place-items-center"
+            className="modal-overlay fixed w-full h-full bg-black/50 top-0 left-0 place-content-center place-items-center z-100"
             onClick={onClose}
         >
             <div
-                className="modal-content h-100 bg-white shadow-md p-4 rounded-md flex flex-col justify-center items-center"
+                className="modal-content  bg-white shadow-md p-4 rounded-md flex flex-col justify-center items-center"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-header pb-2 w-full flex flex-row justify-end">
@@ -32,4 +32,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     );
 };
 
-export default Modal;
+export default BaseModal;

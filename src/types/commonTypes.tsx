@@ -23,6 +23,7 @@ export type AddPostData = {
     content: string;
     author: string;
     date: Date;
+    isDelete: boolean;
 };
 export type PostData = {
     id: string;
@@ -31,4 +32,5 @@ export type PostData = {
     content: string;
     author: string;
     date: Date;
+    isDelete: boolean;
 };

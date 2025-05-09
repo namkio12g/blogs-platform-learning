@@ -9,6 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { PostData } from "@/types/commonTypes";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     url: string;
@@ -16,12 +17,18 @@ interface Props {
 }
 
 const MainPostCard: React.FC<Props> = ({ url, data }) => {
+    const navigate = useNavigate();
+
+    const handleClick = (postId: string) => {
+        navigate(`/post/detail/${postId}`);
+    };
     return (
         <Card
             className="main-post-card flex  sm:flex-row-reverse xs:flex-col
-             p-8 hover:shadow-md hover:shadow-theme-text-secondary rounded-sm border-[1px] border-theme-border
+             sm:p-8 xs:p-3 hover:shadow-md hover:shadow-theme-text-secondary rounded-sm border-[1px] border-theme-border
             bg-theme-primary gap-1 
-             md:h-[370px] xs:h-auto"
+            h-auto"
+            onClick={() => handleClick(data.id)}
         >
             <div className="main-post-card-right sm:w-1/2 xs:w-full place-items-center ">
                 <img src={url} alt="" />
@@ -55,12 +62,6 @@ const MainPostCard: React.FC<Props> = ({ url, data }) => {
                                 {data.author}
                             </p>
                         </div>
-                        <button
-                            className="btn cursor-pointer btn-sm btn-primary font-roboto  text-theme-text-primary
-                     hover:underline hover:text-blue-700"
-                        >
-                            Read More
-                        </button>
                     </div>
                 </CardFooter>
             </div>

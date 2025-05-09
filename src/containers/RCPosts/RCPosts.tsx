@@ -4,7 +4,12 @@ import PostCard from "@/components/PostCard/PostCard";
 import { PostData } from "@/types/commonTypes";
 import React, { useEffect, useMemo } from "react";
 
-export const Container: React.FC = () => {
+type ContainerProps = {
+    tagsSearch: string[];
+    keySearch: string;
+};
+
+export const Container: React.FC<ContainerProps> = ({ ...props }) => {
     const [data, setData] = React.useState<PostData[]>([]);
 
     const images = [
@@ -19,7 +24,12 @@ export const Container: React.FC = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             await apiClient
-                .get("/posts")
+                .get(
+                    `/posts?isDelete=false&title_like=${props.keySearch}` +
+                        props.tagsSearch
+                            .map((tag) => `&tags_like=${tag}`)
+                            .join("")
+                )
                 .then((res) => {
                     setData(res.data);
                 })
@@ -28,7 +38,7 @@ export const Container: React.FC = () => {
                 });
         };
         fetchPosts();
-    }, []);
+    }, [props.tagsSearch, props.keySearch]);
 
     const posts = useMemo(() => {
         if (!data) return [];
@@ -37,7 +47,7 @@ export const Container: React.FC = () => {
 
             return { ...post, image };
         });
-    }, [data]);
+    }, [data, images]);
 
     return (
         <>
@@ -57,7 +67,7 @@ export const Container: React.FC = () => {
             {posts.length > 0 ? (
                 <>
                     <div className="main-card grid grid-cols-1 mb-8">
-                        <MainPostCard url={posts[1].image} data={posts[1]} />
+                        <MainPostCard url={posts[0].image} data={posts[0]} />
                     </div>
                     <div className="posts-list grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4">
                         {posts.length > 0 &&

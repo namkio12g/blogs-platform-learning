@@ -3,17 +3,19 @@ import { Routes, Route, BrowserRouter } from "react-router";
 import NavBar from "./containers/NavBar/NavBar";
 import PostsPage from "./pages/PostPage/PostsPage";
 import PostDetailPage from "./pages/PostDetailPage/PostDetailPage";
-import AddNewPostPage from "./pages/AddNewPostPage/AddNewPostPage";
+import InteractedPostPage from "./pages/InteractedPostPage/InteractedPostPage";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
     const UseNavBar = ({ children }: { children: React.ReactNode }) => {
         return (
             <div className="root-container relative w-full min-h-screen h-full bg-theme-primary place-items-center">
                 <NavBar />
-                <div className="content-container py-12 px-10    w-full place-items-center">
+                <div className="content-container py-12 px-10 w-full place-items-center">
                     {children}
                 </div>
+                <Toaster />
             </div>
         );
     };
@@ -39,7 +41,15 @@ function App() {
                             path="/add-new-post"
                             element={
                                 <UseNavBar>
-                                    <AddNewPostPage />
+                                    <InteractedPostPage />
+                                </UseNavBar>
+                            }
+                        />
+                        <Route
+                            path="/edit-post/:id"
+                            element={
+                                <UseNavBar>
+                                    <InteractedPostPage />
                                 </UseNavBar>
                             }
                         />
