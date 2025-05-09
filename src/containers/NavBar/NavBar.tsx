@@ -6,7 +6,7 @@ import "./NavBar.scss";
 
 const NavBar: React.FC = () => {
     return (
-        <nav className="navbar h-20 w-full bg-theme-secondary rounded-sm shadow-lg place-content-center px-5">
+        <nav className="navbar flex md:flex-row xs:flex-col py-5 w-full bg-theme-secondary rounded-sm shadow-lg place-items-center place-content-center px-5 ">
             <div className="inline-block">
                 <img
                     src={BlogLogo}
@@ -22,23 +22,15 @@ const NavBar: React.FC = () => {
             </div>
             <ul className="navbar-links inline-block">
                 <li className="link  inline-block mr-7 text-xl text-theme-text-primary">
-                    <Link to="/">Home</Link>
+                    <Link to="/posts">Home</Link>
                 </li>
                 <li className="link inline-block mr-7 text-xl text-theme-text-primary">
                     <Link to="/post/detail/123213">Posts</Link>
                 </li>
-                <li className="inline-block">
-                    <input
-                        type="text"
-                        className={`search-box inline-block border-theme-text-primary border-[1px] rounded-full w-96 h-10 px-3 placeholder:text-theme-text-primary text-theme-text-primary 
-                        mr-2
-                        `}
-                        placeholder={` Search for a post...`}
-                    />
-                </li>
+
                 <li className="link inline-block mr-7 text-xl text-theme-text-primary">
-                    <Link to="/add-new-post" className="flex flex-row">
-                        <SquarePen className="mr-2" />
+                    <Link to="/add-new-post" className="">
+                        <SquarePen className="mr-2 mb-1 inline-block" />
                         Write
                     </Link>
                 </li>

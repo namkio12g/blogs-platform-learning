@@ -1,0 +1,11 @@
+.add-input {
+    border: none;
+    border-radius: 1px;
+    border-bottom: 1px solid gray;
+    padding-left: 0px;
+
+    &:focus {
+        border-bottom: 1px solid var(--theme-text-primary);
+        box-shadow: none !important;
+    }
+}

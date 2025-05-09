@@ -1,0 +1,18 @@
+.tags-content {
+    overflow-y: scroll;
+    .tag-first {
+        background-color: rgb(122, 120, 120);
+        border-radius: 20px;
+        color: white;
+    }
+    .tag {
+        border-radius: 20px;
+        background-color: rgb(118, 187, 48);
+        width: fit-content;
+        color: white;
+        cursor: pointer;
+        &:hover {
+            background-color: green;
+        }
+    }
+}
