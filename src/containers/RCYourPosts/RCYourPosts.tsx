@@ -2,12 +2,13 @@ import apiClient from "@/api/TaskAPI";
 import PostCard from "@/components/PostCard/PostCard";
 import { PostData } from "@/types/commonTypes";
 import React, { useEffect, useMemo } from "react";
+import { toast } from "sonner";
 
-type MyComponentProps = {
-    title?: string;
+type ContainerProps = {
+    tagsSearch: string[];
+    keySearch: string;
 };
-
-export const Container: React.FC<MyComponentProps> = () => {
+export const Container: React.FC<ContainerProps> = ({ ...props }) => {
     const [data, setData] = React.useState<PostData[]>([]);
 
     const images = [
@@ -19,12 +20,31 @@ export const Container: React.FC<MyComponentProps> = () => {
         "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg",
     ];
 
+    const handleDeletePost = async (postId: string) => {
+        console.log("delete post", postId);
+        await apiClient
+            .patch(`/posts/${postId}`, { isDelete: true })
+            .then(() => {
+                toast.success("Post deleted successfully");
+                setData((prevData) =>
+                    prevData.filter((post) => post.id !== postId)
+                );
+            })
+            .catch(() => {
+                toast.error("Error while deleting post");
+            });
+    };
+
     useEffect(() => {
         const fetchPosts = async () => {
             await apiClient
-                .get("/posts")
+                .get(
+                    `/posts?isDelete=false&title_like=${props.keySearch}` +
+                        props.tagsSearch
+                            .map((tag) => `&tags_like=${tag}`)
+                            .join("")
+                )
                 .then((res) => {
-                    console.log(res);
                     setData(res.data);
                 })
                 .catch(() => {
@@ -32,17 +52,17 @@ export const Container: React.FC<MyComponentProps> = () => {
                 });
         };
         fetchPosts();
-    }, []);
+    }, [props.tagsSearch, props.keySearch]);
 
     const posts = useMemo(() => {
         if (!data) return [];
-        console.log("data", data);
         return data.map((post) => {
             const image = images[Math.floor(Math.random() * images.length)];
 
             return { ...post, image };
         });
     }, [data]);
+
     return (
         <>
             <div
@@ -52,7 +72,7 @@ export const Container: React.FC<MyComponentProps> = () => {
                 <p>Your Posts here</p>
             </div>
 
-            <div className="your-posts grid grid-cols-3 gap-4">
+            <div className="your-posts grid grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4">
                 {posts.length > 0 &&
                     posts.map((post) => {
                         return (
@@ -61,6 +81,7 @@ export const Container: React.FC<MyComponentProps> = () => {
                                 url={post.image}
                                 isOwned={true}
                                 data={post}
+                                handleDeletePost={handleDeletePost}
                             />
                         );
                     })}

@@ -1,4 +1,8 @@
 .left-container {
+    transition: left 500ms ease;
+    &.active {
+        left: 0;
+    }
     .document-list {
         .item {
             margin-bottom: 10px;

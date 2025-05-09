@@ -10,6 +10,7 @@ type AddInputProps = {
     name: string;
     classNameInput?: string;
     classNameLabel?: string;
+    defaultValue?: string;
 };
 
 const AddInput: React.FC<AddInputProps> = ({ ...props }: AddInputProps) => {
@@ -23,6 +24,7 @@ const AddInput: React.FC<AddInputProps> = ({ ...props }: AddInputProps) => {
             </Label>
             <Input
                 id={props.name}
+                defaultValue={props.defaultValue}
                 className={`add-input ${props.classNameInput}`}
                 placeholder={props.placeholder}
                 required={props.required}
